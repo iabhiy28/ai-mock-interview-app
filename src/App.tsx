@@ -6,6 +6,9 @@ import ProtectRoutes from "@/layouts/protected-routes";
 import  MainLayout  from "@/layouts/main-layout";
 
 import HomePage from "@/routes/home";
+import Services from "@/routes/Services";
+import AboutPage from "./routes/About";
+import ContactPage from "./routes/contact-page";
 import  SignInPage  from "./routes/sign-in";
 import  SignUpPage  from "./routes/sign-up";
 import  Generate  from "./components/generate";
@@ -22,6 +25,9 @@ const App = () => {
         {/* public routes */}
         <Route element={<PublicLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/about" element={<AboutPage/>} />
+          <Route path="/services" element={<Services />} />
         </Route>
 
         {/* authentication layout */}
