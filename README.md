@@ -1,54 +1,57 @@
-# React + TypeScript + Vite
+# 🧠 Mockify – AI-Based Mock Interview Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Mockify is an AI-driven mock interview platform that simulates real-world interview scenarios. Powered by Gemini API, it dynamically generates domain-specific questions, analyzes your responses using NLP, and provides real-time performance feedback and improvement tips.
 
-Currently, two official plugins are available:
+<p align="center">
+  <img src="https://mockify-93494.web.app/demo.gif" alt="Mockify Demo" width="70%"/>
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Live Demo
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+🌐 [Try Mockify Now](https://mockify-93494.web.app/)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠 Tech Stack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Frontend**: React.js, TailwindCSS, Shadcn/UI
+- **Backend/AI**: Gemini API (Google AI)
+- **Database**: Firebase Firestore
+- **Authentication**: Firebase Auth
+- **Deployment**: Firebase Hosting
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+---
+
+## ✨ Features
+
+- 🎯 AI-generated domain-specific interview questions
+- 📊 Real-time performance scoring with feedback
+- 💬 Natural Language Processing for response evaluation
+- 📁 User-friendly dashboard with session history
+- 🔐 Secure user authentication with Firebase
+- 📱 Fully responsive and mobile-ready UI
+
+---
+
+## 📸 Screenshots
+
+| Home | Interview Session | Feedback |
+|------|-------------------|----------|
+| ![Home](./screenshots/home.png) | ![Interview](./screenshots/interview.png) | ![Feedback](./screenshots/feedback.png) |
+
+---
+
+## 📦 Installation
+
+```bash
+# Clone the repo
+git clone https://github.com/iabhiy28/ai-mock-interview-app.git
+cd ai-mock-interview-app
+
+# Install dependencies
+npm install
+
+# Run the app
+npm run dev
