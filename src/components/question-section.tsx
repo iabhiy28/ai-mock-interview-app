@@ -3,23 +3,33 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
 import TooltipButton from "./tooltip-botton";
-import { Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX, Trash2 } from "lucide-react";
 import RecordAnswer from "./record-answer";
+
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "@/config/firbase.config";
+import { toast } from "sonner";
 
 interface QuestionSectionProps {
   questions: { question: string; answer: string }[];
+  interviewId: string;
+  onUpdateQuestions?: (
+    updatedQuestions: { question: string; answer: string }[]
+  ) => void;
 }
 
-const QuestionSection = ({ questions }: QuestionSectionProps) => {
+const QuestionSection = ({
+  questions,
+  interviewId,
+  onUpdateQuestions,
+}: QuestionSectionProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isWebCam, setIsWebCam] = useState(false);
-
   const [currentSpeech, setCurrentSpeech] =
     useState<SpeechSynthesisUtterance | null>(null);
 
   const handlePlayQuestion = (qst: string) => {
     if (isPlaying && currentSpeech) {
-      // stop the speech if already playing
       window.speechSynthesis.cancel();
       setIsPlaying(false);
       setCurrentSpeech(null);
@@ -30,12 +40,33 @@ const QuestionSection = ({ questions }: QuestionSectionProps) => {
         setIsPlaying(true);
         setCurrentSpeech(speech);
 
-        // handle the speech end
         speech.onend = () => {
           setIsPlaying(false);
           setCurrentSpeech(null);
         };
       }
+    }
+  };
+
+  const handleDeleteQuestion = async (index: number) => {
+    try {
+      const updatedQuestions = [...questions];
+      updatedQuestions.splice(index, 1);
+
+      await updateDoc(doc(db, "interviews", interviewId), {
+        questions: updatedQuestions,
+      });
+
+      toast("Deleted", {
+        description: "Question deleted successfully",
+      });
+
+      onUpdateQuestions?.(updatedQuestions);
+    } catch (error) {
+      console.error("Error deleting question:", error);
+      toast.error("Error", {
+        description: "Failed to delete question",
+      });
     }
   };
 
@@ -66,7 +97,7 @@ const QuestionSection = ({ questions }: QuestionSectionProps) => {
               {tab.question}
             </p>
 
-            <div className="w-full flex items-center justify-end">
+            <div className="w-full flex items-center justify-end gap-2 mt-2">
               <TooltipButton
                 content={isPlaying ? "Stop" : "Start"}
                 icon={
@@ -77,6 +108,11 @@ const QuestionSection = ({ questions }: QuestionSectionProps) => {
                   )
                 }
                 onClick={() => handlePlayQuestion(tab.question)}
+              />
+              <TooltipButton
+                content="Delete"
+                icon={<Trash2 className="min-w-5 min-h-5 text-red-500" />}
+                onClick={() => handleDeleteQuestion(i)}
               />
             </div>
 
@@ -91,6 +127,5 @@ const QuestionSection = ({ questions }: QuestionSectionProps) => {
     </div>
   );
 };
-
 
 export default QuestionSection;
